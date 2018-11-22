@@ -32,7 +32,7 @@ export default class SuperheroDisplay extends Component {
       const imgAlt = `Photo of ${name}`
 
       return (
-        <InfoDisplay className="container">
+        <InfoDisplay className="container-fluid">
           <div className="row">
             <div className="col-sm">
               <img src={imgSrc} alt={imgAlt} className="img-thumbnail" />

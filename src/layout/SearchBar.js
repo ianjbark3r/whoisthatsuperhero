@@ -88,23 +88,25 @@ export default class SearchBar extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    const name = this.state.superhero
+    if (this.state.superhero) {
+      const name = this.state.superhero
 
-    fetch(`${endpoint}?name=${name}&limit=1&apikey=${apikey}`)
-    .then(res => {
-      return res.json()
-    })
-    .then(jsonData => {
-      this.setState({
-        submitted: true,
-        heroInfo: jsonData
+      fetch(`${endpoint}?nameStartsWith=${name}&limit=1&apikey=${apikey}`)
+      .then(res => {
+        return res.json()
       })
-    })
-    .catch(err => {
-      console.log(err)
-    })
+      .then(jsonData => {
+        this.setState({
+          submitted: true,
+          heroInfo: jsonData
+        })
+      })
+      .catch(err => {
+        console.log(err)
+      })
 
-    console.log(this.state.heroInfo);
+      console.log(this.state.heroInfo);
+    }
   }
 
   render() {
