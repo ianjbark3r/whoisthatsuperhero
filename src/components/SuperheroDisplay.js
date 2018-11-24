@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import Comics from './Comics';
+import Series from './Series';
+import Events from './Events';
+import Links from './Links';
 
 const InfoDisplay = styled.div`
   padding-bottom: 10vh;
@@ -43,48 +47,12 @@ export default class SuperheroDisplay extends Component {
               <p style={{ marginBottom: "1rem" }}><a href="http://marvel.com">{attributionText}</a></p>
               <p>{description}</p>
               <hr />
-              <h2>Comics</h2>
-              <p>Here is a list of comics in which {name} makes an appearance.</p>
-              <ul>
-                {comics.items.map((comic, index) => {
-                  return (
-                    <li>{comic.name}</li>
-                  )
-                })}
-              </ul>
-              <hr />
-              <h2>Series</h2>
-              <p>Here is a list of comic series in which {name} makes an appearance.</p>
-              <ul>
-                {series.items.map((seriesEntry, index) => {
-                  return (
-                    <li key={index}>{seriesEntry.name}</li>
-                  )
-                })}
-              </ul>
-              <hr />
-              <h2>Events</h2>
-              <p>Here is a list of events in which {name} has been involved.</p>
-              <ul>
-                {events.items.map((event, index) => {
-                  return (
-                    <li key={index}>{event.name}</li>
-                  )
-                })}
-              </ul>
-              <hr />
-              <h2>Links</h2>
-              <p>Helpful links to more information regarding {name}</p>
-                {urls.map((url, index) => {
-                  return (
-                    <a href={url.url}>
-                      <button className="btn btn-outline-info" key={index}>{url.type}</button>
-                    </a>
-                  )
-                })}
+              <Comics comics={comics} name={name} />
+              <Series series={series} name={name} />
+              <Events events={events} name={name} />
+              <Links urls={urls} name={name} />
             </div>
           </div>
-          <hr />
         </InfoDisplay>
       )
     }
