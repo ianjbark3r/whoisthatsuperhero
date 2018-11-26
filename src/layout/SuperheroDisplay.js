@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import Comics from './Comics';
-import Series from './Series';
-import Events from './Events';
-import Links from './Links';
+import Comics from '../components/Comics';
+import Series from '../components/Series';
+import Events from '../components/Events';
+import Links from '../components/Links';
 
 const InfoDisplay = styled.div`
   padding-bottom: 10vh;

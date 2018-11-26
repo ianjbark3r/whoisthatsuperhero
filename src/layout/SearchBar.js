@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Button, Form, Input } from 'reactstrap';
-import SupeheroDisplay from '../components/SuperheroDisplay'
+import SupeheroDisplay from './SuperheroDisplay'
 
 const endpoint = "https://gateway.marvel.com:443/v1/public/characters"
 const apikey = "9d919d14053c4677a44d43af4024d3d1"
