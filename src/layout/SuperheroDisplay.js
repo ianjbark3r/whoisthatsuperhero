@@ -31,7 +31,7 @@ export default class SuperheroDisplay extends Component {
       )
     } else {
       const { attributionText } = this.props.heroInfo
-      const { name, description, thumbnail, comics, series, events, urls } = this.props.heroInfo.data.results[0]
+      const { name, description, thumbnail, id, urls } = this.props.heroInfo.data.results[0]
       const imgSrc = `${thumbnail.path}.${thumbnail.extension}`
       const imgAlt = `Photo of ${name}`
 
@@ -47,9 +47,9 @@ export default class SuperheroDisplay extends Component {
               <p style={{ marginBottom: "1rem" }}><a href="http://marvel.com">{attributionText}</a></p>
               <p>{description}</p>
               <hr />
-              <Comics comics={comics} name={name} />
-              <Series series={series} name={name} />
-              <Events events={events} name={name} />
+              <Comics id={id} name={name} endpoint={this.props.endpoint} apikey={this.props.apikey} />
+              <Series id={id} name={name} endpoint={this.props.endpoint} apikey={this.props.apikey} />
+              <Events id={id} name={name} endpoint={this.props.endpoint} apikey={this.props.apikey} />
               <Links urls={urls} name={name} />
             </div>
           </div>

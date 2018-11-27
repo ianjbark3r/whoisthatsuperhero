@@ -104,8 +104,6 @@ export default class SearchBar extends Component {
       .catch(err => {
         console.log(err)
       })
-
-      console.log(this.state.heroInfo);
     }
   }
 
@@ -121,7 +119,7 @@ export default class SearchBar extends Component {
             </Form>
           </div>
         </SearchArea>
-        <SupeheroDisplay heroInfo={this.state.heroInfo} submitted={this.state.submitted} />
+        <SupeheroDisplay heroInfo={this.state.heroInfo} submitted={this.state.submitted} endpoint={endpoint} apikey={apikey} />
       </div>
     )
   }
