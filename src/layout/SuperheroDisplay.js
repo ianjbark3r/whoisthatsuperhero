@@ -47,9 +47,9 @@ export default class SuperheroDisplay extends Component {
               <p style={{ marginBottom: "1rem" }}><a href="http://marvel.com">{attributionText}</a></p>
               <p>{description}</p>
               <hr />
-              <Comics id={id} name={name} endpoint={this.props.endpoint} apikey={this.props.apikey} />
-              <Series id={id} name={name} endpoint={this.props.endpoint} apikey={this.props.apikey} />
-              <Events id={id} name={name} endpoint={this.props.endpoint} apikey={this.props.apikey} />
+              <Comics name={name} comics={this.props.comics} />
+              <Series name={name} series={this.props.series} />
+              <Events name={name} events={this.props.events} />
               <Links urls={urls} name={name} />
             </div>
           </div>
