@@ -38,7 +38,7 @@ export default class SuperheroDisplay extends Component {
       return (
         <InfoDisplay className="container-fluid">
           <div className="row">
-            <div className="col-sm">
+            <div className="col-md">
               <img src={imgSrc} alt={imgAlt} className="img-thumbnail" />
             </div>
             <div className="col-sm">
@@ -47,10 +47,10 @@ export default class SuperheroDisplay extends Component {
               <p style={{ marginBottom: "1rem" }}><a href="http://marvel.com">{attributionText}</a></p>
               <p>{description}</p>
               <hr />
-              <Comics name={name} comics={this.props.comics} />
-              <Series name={name} series={this.props.series} />
-              <Events name={name} events={this.props.events} />
-              <Links urls={urls} name={name} />
+              <Comics name={name} id={this.props.id} endpoint={this.props.endpoint} apikey={this.props.apikey}/>
+              <Series name={name} id={this.props.id} endpoint={this.props.endpoint} apikey={this.props.apikey}/>
+              <Events name={name} id={this.props.id} endpoint={this.props.endpoint} apikey={this.props.apikey}/>
+              <Links name={name} urls={urls} />
             </div>
           </div>
         </InfoDisplay>
