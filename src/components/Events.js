@@ -7,7 +7,9 @@ export default class Events extends React.Component {
     this.handleClick = this.handleClick.bind(this)
 
     this.state = {
-      collapsed: true
+      collapsed: true,
+      prevSuperhero: '',
+      events: {}
     }
   }
 
@@ -17,6 +19,20 @@ export default class Events extends React.Component {
     this.setState({
       collapsed: !this.state.collapsed
     })
+  }
+
+  static getDerivedStateFromProps() {
+    if (this.props.superhero !== this.state.prevSuperhero) {
+      fetch(`${this.props.endpoint}/${this.props.id}/events?limit=6&apikey=${this.props.apikey}`)
+        .then(res => res.json())
+        .then(jsonData => {
+          return {
+            prevSuperhero: this.props.superhero,
+            events: jsonData
+          }
+        }).catch(err => console.err('Error:', err));
+    }
+    return null;
   }
 
   render() {
@@ -33,7 +49,7 @@ export default class Events extends React.Component {
           <h2><a href="/" onClick={this.handleClick}>Events</a></h2>
           <p>Events in which {this.props.superhero} played a role.</p>
           <ul className="list-unstyled">
-            {this.props.events.data.results.map((result, index) => {
+            {this.state.events.data.results.map((result, index) => {
               return (
                 <div class="media mb-3" key={index}>
                   <img className="mr-3" src={`${result.thumbnail.path}/portrait_medium.${result.thumbnail.extension}`} alt={`${result.title} thumbnail`} />

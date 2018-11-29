@@ -8,7 +8,9 @@ export default class Comics extends React.Component {
     this.handleClick = this.handleClick.bind(this)
 
     this.state = {
-      collapsed: true
+      collapsed: true,
+      prevSuperhero: '',
+      comics: {}
     }
   }
 
@@ -18,6 +20,20 @@ export default class Comics extends React.Component {
     this.setState({
       collapsed: !this.state.collapsed
     })
+  }
+
+  static getDerivedStateFromProps() {
+    if (this.props.superhero !== this.state.prevSuperhero) {
+      fetch(`${this.props.endpoint}/${this.props.id}/comics?limit=6&apikey=${this.props.apikey}`)
+        .then(res => res.json())
+        .then(jsonData => {
+          return {
+            prevSuperhero: this.props.superhero,
+            comics: jsonData
+          }
+        }).catch(err => console.err('Error:', err));
+    }
+    return null;
   }
 
   render() {
@@ -34,7 +50,7 @@ export default class Comics extends React.Component {
           <h2><a href="/" onClick={this.handleClick}>Comics</a></h2>
           <p>A sampling of comics in which {this.props.superhero} makes an appearance.</p>
           <CardColumns>
-            {this.props.comics.data.results.map((result, index) => {
+            {this.state.comics.data.results.map((result, index) => {
                 return (
                   <Card key={index}>
                     <a href={result.urls[0].url} target="_blank" rel="noopener noreferrer"><CardImg top width="100%" src={`${result.thumbnail.path}.${result.thumbnail.extension}`} /></a>
