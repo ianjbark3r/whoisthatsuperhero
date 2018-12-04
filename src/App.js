@@ -1,41 +1,32 @@
 import React, { Component } from 'react';
+import { Provider } from 'react-redux';
 import './App.css';
-import Footer from './layout/Footer';
+import store from './store';
+
 import Header from './layout/Header';
-import SearchBar from './layout/SearchBar';
-import SuperheroDisplay from './layout/SuperheroDisplay'
+import Search from './layout/Search';
+import HeroInfo from './layout/HeroInfo';
+import Comics from './layout/Comics';
+import Series from './layout/Series';
+import Events from'./layout/Events';
+import Links from './layout/Links';
+import Footer from './layout/Footer';
 
-class App extends Component {
-  defaultState = {
-    superhero: 'Thor'
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-
-    this.state = this.defaultState
-  }
-
-  handleSubmit(e) {
-    e.preventDefault()
-
-    this.setState({
-      superhero: e.target.elements.name.value
-    })
-  }
-
+export default class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Header />
-        <SearchBar handleSubmit={this.handleSubmit} />
-        <SuperheroDisplay superhero={this.state.superhero}/>
-        <Footer />
-      </div>
-    )
+      <Provider store={store}>
+        <div className="App">
+          <Header />
+          <Search />
+          <HeroInfo />
+          <Comics />
+          <Series />
+          <Events />
+          <Links />
+          <Footer />
+        </div>
+      </Provider>
+    );
   }
 }
-
-export default App;
