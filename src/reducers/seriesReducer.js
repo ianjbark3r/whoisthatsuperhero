@@ -1,6 +1,5 @@
 const seriesReducer = (state = {
     isFetching: false,
-    collapsed: false,
     response: {
       "code": 200,
       "status": "Ok",
@@ -2724,13 +2723,15 @@ const seriesReducer = (state = {
   switch (action.type) {
     case 'REQUEST_SERIES': {
       return {
+        ...state,
         isFetching: true
       }
     }
     case 'RECEIVE_SERIES': {
       return {
+        ...state,
         isFetching: false,
-        response: action.response
+        // response: action.response
       }
     }
     default:

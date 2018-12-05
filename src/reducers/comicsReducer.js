@@ -1,6 +1,5 @@
 const comicsReducer = (state = {
     isFetching: false,
-    collapsed: false,
     response: {
       "code": 200,
       "status": "Ok",
@@ -1317,13 +1316,15 @@ const comicsReducer = (state = {
   switch (action.type) {
     case 'REQUEST_COMICS': {
       return {
+        ...state,
         isFetching: true
       }
     }
     case 'RECEIVE_COMICS': {
       return {
+        ...state,
         isFetching: false,
-        response: action.response
+        // response: action.response
       }
     }
     default:

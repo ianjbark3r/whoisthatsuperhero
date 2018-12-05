@@ -21,7 +21,8 @@ class HeroDetailsDisplay extends Component {
 
 const mapStateToProps = state => {
   return {
-    superhero: state.superhero.name,
+    superhero: state.heroInfo.response.data.results[0].name,
+    isFetching: state.heroInfo.isFetching,
     attributionText: state.heroInfo.response.attributionText,
     description: state.heroInfo.response.data.results[0].description
   }

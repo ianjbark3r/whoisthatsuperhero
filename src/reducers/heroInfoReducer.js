@@ -1,6 +1,5 @@
 const heroInfoReducer = (state = {
     isFetching: false,
-    collapsed: true,
     response: {
       "code": 200,
       "status": "Ok",
@@ -414,13 +413,15 @@ const heroInfoReducer = (state = {
   switch (action.type) {
     case 'REQUEST_HEROINFO': {
       return {
+        ...state,
         isFetching: true
       }
     }
     case 'RECEIVE_HEROINFO': {
       return {
+        ...state,
         isFetching: false,
-        response: action.response
+        response: action.payload
       }
     }
     default:

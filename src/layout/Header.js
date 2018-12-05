@@ -1,8 +1,4 @@
 import React, { Component } from 'react';
-import {
-  Navbar,
-  NavbarBrand,
-  NavLink } from 'reactstrap';
 import gitLogo from '../github-logo.png';
 
 const navbarStyles = {
@@ -16,10 +12,12 @@ const navbarStyles = {
 export default class Header extends Component {
   render() {
     return (
-      <Navbar style={navbarStyles} className="shadow-lg">
-        <NavbarBrand>WhoIsThatSuperhero?</NavbarBrand>
-        <NavLink href="https://github.com/ianjbark3r/whoisthatsuperhero"><img src={gitLogo} className="image-fluid" alt="Github" /></NavLink>
-      </Navbar>
+      <>
+        <nav style={navbarStyles} className="navbar shadow-lg">
+          <a style={{ color: "white" }} className="navbar-brand" href="https://github.com/ianjbark3r/whoisthatsuperhero" >WhoIsThatSuperhero?</a>
+          <a href="https://github.com/ianjbark3r/whoisthatsuperhero"><img src={gitLogo} className="image-fluid" alt="Github" /></a>
+        </nav>
+      </>
     )
   }
 }

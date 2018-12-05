@@ -1,39 +1,64 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
-class SeriesDisplay extends Component {
-  render() {
-    if (this.props.collapsed) {
-      return null
-    } else if (!this.props.collapsed && this.props.isFetching) {
-      return <p>Loading...</p>
-    } else if (!this.props.collapsed && !this.props.isFetching) {
-      return (
-        <>
-          <p>Comic series featuring {this.props.superhero}.</p>
-          <ul className="list-unstyled">
-            {this.props.response.data.results.map((result, index) => {
-              return (
-                <div className="media mb-3" key={index}>
-                  <img className="mr-3" src={`${result.thumbnail.path}/portrait_medium.${result.thumbnail.extension}`} alt={`${result.title} thumbnail`} />
-                  <div className="media-body" key={index}>
-                    <h5><a href={result.urls[0].url} target="_blank" rel="noopener noreferrer">{result.title}</a></h5>
-                  </div>
+import { toggleSeries } from '../actions/toggleSeries';
+import { requestSeries } from '../actions/requestSeries';
+import { receiveSeries } from '../actions/receiveSeries';
+
+const SeriesDisplay = (props) => {
+  if (props.collapsed) {
+    return (
+      <h1 className="display-4"><a href="/" onClick={(e) => {
+        e.preventDefault();
+
+        props.dispatch(toggleSeries(!props.collapsed))
+        props.dispatch((dispatch) => {
+          dispatch(requestSeries())
+          dispatch(receiveSeries())
+        })
+      }}>Series</a></h1>
+  )
+  } else if (!props.collapsed && props.isFetching) {
+    return (
+      <>
+        <h1 className="display-4"><a href="/" onClick={(e) => {
+          e.preventDefault();
+          props.dispatch(toggleSeries(!props.collapsed))
+        }}>Series</a></h1>
+        <p>Loading...</p>
+      </>
+    )
+  } else if (!props.collapsed && !props.isFetching) {
+    return (
+      <>
+        <h1 className="display-4"><a href="/" onClick={(e) => {
+          e.preventDefault();
+          props.dispatch(toggleSeries(!props.collapsed))
+        }}>Series</a></h1>
+        <hr />
+        <p style={{ fontSize: "1.3rem", fontStyle: "italic" }}>Comic book series featuring {props.superhero}.</p>
+        <div className="card-columns">
+          {props.response.data.results.map((result, index) => {
+            return (
+              <div className="card" key={index}>
+                <a href={result.urls[0].url} target="_blank" rel="noopener noreferrer"><img className="card-img-top" src={`${result.thumbnail.path}/portrait_medium.${result.thumbnail.extension}`} alt={`${result.title} thumbnail`} /></a>
+                <div className="card-body" key={index}>
+                  <h4 className="card-title"><a href={result.urls[0].url} target="_blank" rel="noopener noreferrer">{result.title}</a></h4>
+                  {result.description}
                 </div>
-                )
-              })}
-          </ul>
-          <hr />
-        </>
-      )
-    }
+              </div>
+              )
+            })}
+        </div>
+      </>
+    )
   }
 }
 
 const mapStateToProps = state => {
   return {
     superhero: state.superhero.name,
-    collapsed: state.series.collapsed,
+    collapsed: state.ui.seriesCollapsed,
     isFetching: state.series.isFetching,
     response: state.series.response
   }

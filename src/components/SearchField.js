@@ -1,29 +1,40 @@
-import React, { Component } from 'react';
-import { Button, Form, Input } from 'reactstrap';
+import React from 'react';
+import axios from 'axios';
 import { connect } from 'react-redux';
 
-import { setSuperhero } from '../actions/setSuperhero'
+import { setSuperhero } from '../actions/setSuperhero';
+import { requestHeroInfo } from '../actions/requestHeroInfo';
+import { receiveHeroInfo } from '../actions/receiveHeroInfo';
+import { resetUi } from '../actions/resetUi';
 
-class SearchField extends Component {
-  handleChange(e) {
-    e.preventDefault();
+const SearchField = (props) => (
+  <div className="d-flex justify-content-center">
+    <form className="form-inline" onSubmit={(e) => {
+      e.preventDefault();
 
-    console.log(e.target.value)
-
-    setSuperhero(e.target.value)
-  }
-
-  render() {
-    return (
-      <div className="d-flex justify-content-center">
-        <Form className="d-flex justify-content-center">
-          <Input  type="text" name="superhero"  placeholder="Thor, Iron Man, etc." onChange={this.handleChange.bind(this)}></Input>
-          <Button type="submit" className="btn btn-light ml-2">Search</Button>
-        </Form>
+      props.dispatch(resetUi());
+      props.dispatch((dispatch) => {
+        dispatch(requestHeroInfo())
+        axios.get(`https://gateway.marvel.com:443/v1/public/characters?name=Thor&apikey=9d919d14053c4677a44d43af4024d3d1`)
+          .then((response) => {
+            dispatch(receiveHeroInfo(response))
+          })
+      });
+    }}>
+      <div className="form-group mb-0">
+        <input
+          type="text"
+          name="superhero"
+          className="form-control"
+          placeholder="Thor, Iron Man, etc."
+          onChange={(e) => {
+            props.dispatch(setSuperhero(e.target.value));
+          }}></input>
       </div>
-    )
-  }
-}
+      <button type="submit" className="btn btn-light ml-2">Search</button>
+    </form>
+  </div>
+)
 
 const mapStateToProps = state => {
   return {
@@ -31,10 +42,4 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    setSuperhero: () => dispatch(setSuperhero())
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchField);
+export default connect(mapStateToProps)(SearchField);

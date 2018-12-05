@@ -6,11 +6,7 @@ class HeroImgDisplay extends Component {
     if (this.props.isFetching) {
       return <p>Loading...</p>
     } else if (!this.props.isFetching) {
-      return (
-        <div className="col-md">
-          <img src={`${this.props.path}.${this.props.extension}`} alt={`${this.props.superhero}`} className="img-thumbnail" />
-        </div>
-      )
+      return <img src={`${this.props.path}.${this.props.extension}`} alt={`${this.props.superhero}`} className="img-thumbnail" />
     }
   }
 }
@@ -18,6 +14,7 @@ class HeroImgDisplay extends Component {
 const mapStateToProps = state => {
   return {
     superhero: state.superhero.name,
+    isFetching: state.heroInfo.isFetching,
     path: state.heroInfo.response.data.results[0].thumbnail.path,
     extension: state.heroInfo.response.data.results[0].thumbnail.extension
   }

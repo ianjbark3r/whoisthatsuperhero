@@ -1,40 +1,64 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { Card, CardImg, CardTitle, CardText, CardBody, CardColumns } from 'reactstrap';
 
-class ComicsDisplay extends Component {
-  render() {
-    if (this.props.collapsed) {
-      return null
-    } else if (!this.props.collapsed && this.props.isFetching) {
-      return <p>Loading...</p>
-    } else if (!this.props.collapsed && !this.props.isFetching) {
-      return (
-        <>
-          <p>A sampling of comics in which {this.props.superhero} makes an appearance.</p>
-          <CardColumns>
-            {this.props.response.data.results.map((result, index) => {
-                return (
-                  <Card key={index}>
-                    <a href={result.urls[0].url} target="_blank" rel="noopener noreferrer"><CardImg top width="100%" src={`${result.thumbnail.path}.${result.thumbnail.extension}`} /></a>
-                    <CardBody key={index}>
-                      <CardTitle><a href={result.urls[0].url} target="_blank" rel="noopener noreferrer">{result.title}</a></CardTitle>
-                      <CardText><strong>Price:</strong> ${result.prices[0].price}</CardText>
-                    </CardBody>
-                  </Card>
-                )
-              })}
-          </CardColumns>
-        </>
-      )
-    }
+import { toggleComics } from '../actions/toggleComics';
+import { requestComics } from '../actions/requestComics';
+import { receiveComics } from '../actions/receiveComics';
+
+const ComicsDisplay = (props) => {
+  if (props.collapsed) {
+    return (
+      <h1 className="display-4"><a href="/" onClick={(e) => {
+        e.preventDefault();
+
+        props.dispatch(toggleComics(!props.collapsed))
+        props.dispatch((dispatch) => {
+          dispatch(requestComics())
+          dispatch(receiveComics())
+        })
+      }}>Comics</a></h1>
+    )
+  } else if (!props.collapsed && props.isFetching) {
+    return (
+      <>
+        <h1 className="display-4"><a href="/" onClick={(e) => {
+          e.preventDefault();
+          props.dispatch(toggleComics(!props.collapsed))
+        }}>Comics</a></h1>
+        <p>Loading...</p>
+      </>
+    )
+  } else if (!props.collapsed && !props.isFetching) {
+    return (
+      <>
+        <h1 className="display-4"><a href="/" onClick={(e) => {
+          e.preventDefault();
+          props.dispatch(toggleComics(!props.collapsed))
+        }}>Comics</a></h1>
+        <hr />
+        <p style={{ fontSize: "1.3rem", fontStyle: "italic" }}>A sampling of comics in which {props.superhero} makes an appearance.</p>
+        <div className="card-columns">
+          {props.response.data.results.map((result, index) => {
+              return (
+                <div className="card" key={index}>
+                  <a href={result.urls[0].url} target="_blank" rel="noopener noreferrer"><img className="card-img-top" width="100%" src={`${result.thumbnail.path}.${result.thumbnail.extension}`} alt={result.title} /></a>
+                  <div className="card-body" key={index}>
+                    <h4 className="card-title"><a href={result.urls[0].url} target="_blank" rel="noopener noreferrer">{result.title}</a></h4>
+                    <p className="card-text"><strong>Price:</strong> ${result.prices[0].price}</p>
+                  </div>
+                </div>
+              )
+            })}
+        </div>
+      </>
+    )
   }
 }
 
 const mapStateToProps = state => {
   return {
     superhero: state.superhero.name,
-    collapsed: state.comics.collapsed,
+    collapsed: state.ui.comicsCollapsed,
     isFetching: state.comics.isFetching,
     response: state.comics.response
   }

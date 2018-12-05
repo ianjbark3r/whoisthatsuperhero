@@ -1,6 +1,5 @@
 const eventsReducer = (state = {
     isFetching: false,
-    collapsed: false,
     response: {
       "code": 200,
       "status": "Ok",
@@ -4207,13 +4206,15 @@ const eventsReducer = (state = {
   switch (action.type) {
     case 'REQUEST_EVENTS': {
       return {
+        ...state,
         isFetching: true
       }
     }
     case 'RECEIVE_EVENTS': {
       return {
+        ...state,
         isFetching: false,
-        response: action.response
+        // response: action.response
       }
     }
     default:
