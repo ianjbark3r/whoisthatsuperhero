@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { connect } from 'react-redux';
 
 import { toggleEvents } from '../actions/toggleEvents';
@@ -14,7 +15,10 @@ const EventsDisplay = (props) => {
         props.dispatch(toggleEvents(!props.collapsed))
         props.dispatch((dispatch) => {
           dispatch(requestEvents())
-          dispatch(receiveEvents())
+          axios.get(`https://gateway.marvel.com:443/v1/public/characters/${props.id}/events?limit=9&apikey=9d919d14053c4677a44d43af4024d3d1`)
+            .then((response) => {
+              dispatch(receiveEvents(response))
+            })
         })
       }}>Events</a></h1>
     )
@@ -58,6 +62,7 @@ const EventsDisplay = (props) => {
 const mapStateToProps = state => {
   return {
     superhero: state.superhero.name,
+    id: state.heroInfo.response.data.results[0].id,
     collapsed: state.ui.eventsCollapsed,
     isFetching: state.events.isFetching,
     response: state.events.response

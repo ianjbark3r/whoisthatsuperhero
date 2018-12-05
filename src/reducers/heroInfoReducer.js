@@ -421,7 +421,7 @@ const heroInfoReducer = (state = {
       return {
         ...state,
         isFetching: false,
-        response: action.payload
+        response: action.payload.data
       }
     }
     default:

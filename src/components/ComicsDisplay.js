@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { connect } from 'react-redux';
 
 import { toggleComics } from '../actions/toggleComics';
@@ -14,7 +15,10 @@ const ComicsDisplay = (props) => {
         props.dispatch(toggleComics(!props.collapsed))
         props.dispatch((dispatch) => {
           dispatch(requestComics())
-          dispatch(receiveComics())
+          axios.get(`https://gateway.marvel.com:443/v1/public/characters/${props.id}/comics?limit=9&apikey=9d919d14053c4677a44d43af4024d3d1`)
+            .then((response) => {
+              dispatch(receiveComics(response))
+            })
         })
       }}>Comics</a></h1>
     )
@@ -58,6 +62,7 @@ const ComicsDisplay = (props) => {
 const mapStateToProps = state => {
   return {
     superhero: state.superhero.name,
+    id: state.heroInfo.response.data.results[0].id,
     collapsed: state.ui.comicsCollapsed,
     isFetching: state.comics.isFetching,
     response: state.comics.response

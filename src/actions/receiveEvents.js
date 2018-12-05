@@ -1,5 +1,6 @@
 import { RECEIVE_EVENTS } from '../types';
 
-export const receiveEvents = () => ({
-  type: RECEIVE_EVENTS
+export const receiveEvents = (payload) => ({
+  type: RECEIVE_EVENTS,
+  payload
 });

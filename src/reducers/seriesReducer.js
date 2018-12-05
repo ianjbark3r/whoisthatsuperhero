@@ -2731,7 +2731,7 @@ const seriesReducer = (state = {
       return {
         ...state,
         isFetching: false,
-        // response: action.response
+        response: action.payload.data
       }
     }
     default:

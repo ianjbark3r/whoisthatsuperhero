@@ -15,7 +15,7 @@ const SearchField = (props) => (
       props.dispatch(resetUi());
       props.dispatch((dispatch) => {
         dispatch(requestHeroInfo())
-        axios.get(`https://gateway.marvel.com:443/v1/public/characters?name=Thor&apikey=9d919d14053c4677a44d43af4024d3d1`)
+        axios.get(`https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${props.superhero}&apikey=9d919d14053c4677a44d43af4024d3d1`)
           .then((response) => {
             dispatch(receiveHeroInfo(response))
           })
