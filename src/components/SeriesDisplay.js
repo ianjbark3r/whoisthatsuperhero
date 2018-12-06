@@ -20,15 +20,12 @@ const SeriesDisplay = (props) => {
               dispatch(receiveSeries(response))
             })
         })
-      }}>Series</a></h1>
+      }}>Series<img className="ml-3" style={{ width: "1.5rem", transform: "rotate(270deg)" }} src="https://img.icons8.com/metro/50/000000/expand-arrow.png" alt="arrow" /></a></h1>
   )
   } else if (!props.collapsed && props.isFetching) {
     return (
       <>
-        <h1 className="display-4"><a href="/" onClick={(e) => {
-          e.preventDefault();
-          props.dispatch(toggleSeries(!props.collapsed))
-        }}>Series</a></h1>
+        <h1 className="display-4"><a href="/">Series<img className="ml-3" style={{ width: "1.5rem" }} src="https://img.icons8.com/metro/50/000000/expand-arrow.png" alt="arrow" /></a></h1>
         <p>Loading...</p>
       </>
     )
@@ -38,14 +35,14 @@ const SeriesDisplay = (props) => {
         <h1 className="display-4"><a href="/" onClick={(e) => {
           e.preventDefault();
           props.dispatch(toggleSeries(!props.collapsed))
-        }}>Series</a></h1>
+        }}>Series<img className="ml-3" style={{ width: "1.5rem" }} src="https://img.icons8.com/metro/50/000000/expand-arrow.png" alt="arrow" /></a></h1>
         <hr />
         <p style={{ fontSize: "1.3rem", fontStyle: "italic" }}>Comic book series featuring {props.superhero}.</p>
         <div className="card-columns">
           {props.response.data.results.map((result, index) => {
             return (
               <div className="card" key={index}>
-                <a href={result.urls[0].url} target="_blank" rel="noopener noreferrer"><img className="card-img-top" src={`${result.thumbnail.path}/portrait_medium.${result.thumbnail.extension}`} alt={`${result.title} thumbnail`} /></a>
+                <a href={result.urls[0].url} target="_blank" rel="noopener noreferrer"><img className="card-img-top" src={`${result.thumbnail.path}.${result.thumbnail.extension}`} alt={`${result.title} thumbnail`} /></a>
                 <div className="card-body" key={index}>
                   <h4 className="card-title"><a href={result.urls[0].url} target="_blank" rel="noopener noreferrer">{result.title}</a></h4>
                   {result.description}
@@ -61,7 +58,7 @@ const SeriesDisplay = (props) => {
 
 const mapStateToProps = state => {
   return {
-    superhero: state.superhero.name,
+    superhero: state.heroInfo.response.data.results[0].name,
     id: state.heroInfo.response.data.results[0].id,
     collapsed: state.ui.seriesCollapsed,
     isFetching: state.series.isFetching,

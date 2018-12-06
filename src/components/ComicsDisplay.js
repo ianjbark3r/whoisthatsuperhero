@@ -20,15 +20,12 @@ const ComicsDisplay = (props) => {
               dispatch(receiveComics(response))
             })
         })
-      }}>Comics</a></h1>
+      }}>Comics<img className="ml-3" style={{ width: "1.5rem", transform: "rotate(270deg)" }} src="https://img.icons8.com/metro/50/000000/expand-arrow.png" alt="arrow" /></a></h1>
     )
   } else if (!props.collapsed && props.isFetching) {
     return (
       <>
-        <h1 className="display-4"><a href="/" onClick={(e) => {
-          e.preventDefault();
-          props.dispatch(toggleComics(!props.collapsed))
-        }}>Comics</a></h1>
+        <h1 className="display-4"><a href="/">Comics<img className="ml-3" style={{ width: "1.5rem" }} src="https://img.icons8.com/metro/50/000000/expand-arrow.png" alt="arrow" /></a></h1>
         <p>Loading...</p>
       </>
     )
@@ -38,7 +35,7 @@ const ComicsDisplay = (props) => {
         <h1 className="display-4"><a href="/" onClick={(e) => {
           e.preventDefault();
           props.dispatch(toggleComics(!props.collapsed))
-        }}>Comics</a></h1>
+        }}>Comics<img className="ml-3" style={{ width: "1.5rem" }} src="https://img.icons8.com/metro/50/000000/expand-arrow.png" alt="arrow" /></a></h1>
         <hr />
         <p style={{ fontSize: "1.3rem", fontStyle: "italic" }}>A sampling of comics in which {props.superhero} makes an appearance.</p>
         <div className="card-columns">
@@ -61,7 +58,7 @@ const ComicsDisplay = (props) => {
 
 const mapStateToProps = state => {
   return {
-    superhero: state.superhero.name,
+    superhero: state.heroInfo.response.data.results[0].name,
     id: state.heroInfo.response.data.results[0].id,
     collapsed: state.ui.comicsCollapsed,
     isFetching: state.comics.isFetching,
