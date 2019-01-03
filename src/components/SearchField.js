@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { setSuperhero } from '../actions/setSuperhero';
 import { requestHeroInfo } from '../actions/requestHeroInfo';
 import { receiveHeroInfo } from '../actions/receiveHeroInfo';
+import { cancelHeroInfo } from '../actions/cancelHeroInfo';
 import { resetUi } from '../actions/resetUi';
 
 const SearchField = (props) => (
@@ -17,7 +18,12 @@ const SearchField = (props) => (
         dispatch(requestHeroInfo())
         axios.get(`https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${props.superhero}&apikey=9d919d14053c4677a44d43af4024d3d1`)
           .then((response) => {
-            dispatch(receiveHeroInfo(response))
+            if (!response.data.total) {
+              alert("Invalid superhero! Make sure it's a Marvel superhero and double-check your spelling!")
+              dispatch(cancelHeroInfo())
+            } else {
+              dispatch(receiveHeroInfo(response))
+            }
           })
       });
     }}>

@@ -424,6 +424,12 @@ const heroInfoReducer = (state = {
         response: action.payload.data
       }
     }
+    case 'CANCEL_HEROINFO': {
+      return {
+        ...state,
+        isFetching: false
+      }
+    }
     default:
       return state;
   }
