@@ -18,7 +18,7 @@ const SearchField = (props) => (
         dispatch(requestHeroInfo())
         axios.get(`https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${props.superhero}&apikey=9d919d14053c4677a44d43af4024d3d1`)
           .then((response) => {
-            if (!response.data.total) {
+            if (response.data.data.total === 0) {
               alert("Invalid superhero! Make sure it's a Marvel superhero and double-check your spelling!")
               dispatch(cancelHeroInfo())
             } else {
